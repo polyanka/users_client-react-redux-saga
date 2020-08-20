@@ -23,9 +23,13 @@ module.exports = {
         include: [path.resolve(__dirname, 'src')],
         loader: 'babel-loader',
       },
+      {
+        test: /\.scss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.scss'],
   },
 };
