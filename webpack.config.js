@@ -32,4 +32,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
   },
+  devServer: {
+    historyApiFallback: true,
+  },
 };

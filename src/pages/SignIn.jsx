@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert, Button, Form, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Button, Form, Container, Card } from 'react-bootstrap';
 import { signInRequest, signOutRequest } from '../actions';
+import { Message } from '../components';
 
 export const SignIn = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const { error, data } = useSelector((state) => state.auth);
+  const { user, message, token, success } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -23,40 +25,55 @@ export const SignIn = () => {
 
   return (
     <Container fluid className="py-4">
-      {error ? <Alert variant="danger">{error}</Alert> : null}
-      {!data?.login ? (
-        <Form style={{ width: 240 }} className="mx-auto">
-          <Form.Group controlId="formBasicLogin">
-            <Form.Label>Login</Form.Label>
-            <Form.Control
-              placeholder="Login"
-              value={login}
-              onChange={(event) => setLogin(event.target.value)}
-            />
-          </Form.Group>
+      {message ? (
+        <Message text={message} type={success ? 'success' : 'danger'} />
+      ) : null}
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </Form.Group>
+      {!token ? (
+        <>
+          <Card style={{ width: 300 }} className="mx-auto">
+            <Card.Title className="mx-auto pt-4">Sign In</Card.Title>
+            <Card.Body>
+              <Form>
+                <Form.Group controlId="formBasicLogin">
+                  <Form.Label>Login</Form.Label>
+                  <Form.Control
+                    placeholder="Login"
+                    value={login}
+                    onChange={(event) => setLogin(event.target.value)}
+                  />
+                </Form.Group>
 
-          <Button
-            variant="primary"
-            type="submit"
-            onClick={handleSignIn}
-            disabled={!login.length || !password.length}
-          >
-            Submit
-          </Button>
-        </Form>
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                </Form.Group>
+
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={handleSignIn}
+                  disabled={!login.length || !password.length}
+                >
+                  Sing In
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+          <Card style={{ width: 300 }} className="mx-auto mt-4">
+            <Card.Body className="mx-auto">
+              <Link to="/join">Create an account</Link>
+            </Card.Body>
+          </Card>
+        </>
       ) : (
         <>
-          <Alert variant="success">Login successful!</Alert>
+          <h3>{user.login}</h3>
           <Button variant="primary" type="submit" onClick={handleSignOut}>
             Sign Out
           </Button>
