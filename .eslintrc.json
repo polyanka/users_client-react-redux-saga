@@ -35,6 +35,7 @@
         "ImportDeclaration": { "multiline": true, "consistent": true },
         "ExportDeclaration": { "multiline": true, "consistent": true }
       }
-    ]
+    ],
+    "react/jsx-one-expression-per-line": "off"
   }
 }

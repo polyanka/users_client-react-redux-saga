@@ -12,9 +12,9 @@ export const signInRequest = (data) => ({
   payload: data,
 });
 
-export const signInSuccess = (user) => ({
+export const signInSuccess = (data) => ({
   type: AUTH_SIGN_IN_SUCCESS,
-  payload: user,
+  payload: data,
 });
 
 export const signUpRequest = (data) => ({
@@ -22,9 +22,9 @@ export const signUpRequest = (data) => ({
   payload: data,
 });
 
-export const signUpSuccess = (user) => ({
+export const signUpSuccess = (data) => ({
   type: AUTH_SIGN_UP_SUCCESS,
-  payload: user,
+  payload: data,
 });
 
 export const signOutRequest = () => ({

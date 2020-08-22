@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Button, Form, Container, Card } from 'react-bootstrap';
-import { signInRequest, signOutRequest } from '../actions';
-import { Message } from '../components';
+import { signInRequest } from '../actions';
+import { Message, Loader } from '../components';
 
 export const SignIn = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const { user, message, token, success } = useSelector((state) => state.auth);
+  const [redirect, setRedirect] = useState(false);
+  const { message, success } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setRedirect(true);
+      }, 2000);
+    }
+  }, [success]);
 
   const dispatch = useDispatch();
 
@@ -17,19 +26,13 @@ export const SignIn = () => {
     dispatch(signInRequest({ login, password }));
   };
 
-  const handleSignOut = () => {
-    setLogin('');
-    setPassword('');
-    dispatch(signOutRequest());
-  };
-
   return (
     <Container fluid className="py-4">
       {message ? (
         <Message text={message} type={success ? 'success' : 'danger'} />
       ) : null}
 
-      {!token ? (
+      {!success ? (
         <>
           <Card style={{ width: 300 }} className="mx-auto">
             <Card.Title className="mx-auto pt-4">Sign In</Card.Title>
@@ -73,10 +76,11 @@ export const SignIn = () => {
         </>
       ) : (
         <>
-          <h3>{user.login}</h3>
-          <Button variant="primary" type="submit" onClick={handleSignOut}>
-            Sign Out
-          </Button>
+          <p className="text-center">
+            Hi {login}! You will be redirected to our profile
+          </p>
+          <Loader />
+          {redirect ? <Redirect to="/profile" /> : null}
         </>
       )}
     </Container>
