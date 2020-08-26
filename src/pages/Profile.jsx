@@ -13,7 +13,6 @@ export const Profile = () => {
   const { user, message, success, loading } = useSelector(
     (state) => state.profile
   );
-  const { token } = useSelector((state) => state.auth);
 
   const [about, setAbout] = useState('');
   const [name, setName] = useState('');
@@ -25,13 +24,11 @@ export const Profile = () => {
   useEffect(() => {
     dispatch(profileRequest());
   }, [dispatch]);
-
   useEffect(() => {
-    if (!token || success === false) {
+    if (success === false) {
       setRedirect(true);
     }
-  }, [dispatch, token, success]);
-
+  }, [dispatch, success]);
   useEffect(() => {
     if (user != null) {
       setAbout(user.about);

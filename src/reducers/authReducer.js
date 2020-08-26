@@ -1,4 +1,6 @@
 import {
+  AUTH_SUCCESS,
+  AUTH_ERROR,
   AUTH_SIGN_IN_REQUEST,
   AUTH_SIGN_IN_SUCCESS,
   AUTH_SIGN_UP_SUCCESS,
@@ -10,7 +12,7 @@ import {
 const INITIAL_STATE = {
   login: 'polyanka',
   message: null,
-  token: null,
+  isAuth: !!localStorage.getItem('jwtToken'),
   success: false,
   loading: false,
 };
@@ -20,13 +22,14 @@ export default (state = INITIAL_STATE, action) => {
     case AUTH_SIGN_IN_REQUEST:
     case AUTH_SIGN_OUT_REQUEST:
       return { ...state, loading: true };
+
     case AUTH_SIGN_IN_SUCCESS: {
-      const { message, token, success } = action.payload;
-      return { message, token, success, loading: false };
-    }
-    case AUTH_SIGN_OUT_SUCCESS: {
       const { message, success } = action.payload;
-      return { ...state, message, success, token: null, loading: false };
+      return { message, success, isAuth: true, loading: false };
+    }
+
+    case AUTH_SIGN_OUT_SUCCESS: {
+      return { ...INITIAL_STATE };
     }
 
     case AUTH_SIGN_UP_SUCCESS: {
