@@ -13,10 +13,10 @@ function* profileSaga() {
   }
 }
 
-function* profileUpdateSaga({ payload: { about } }) {
+function* profileUpdateSaga({ payload: { about, name, location } }) {
   try {
     const data = yield axios
-      .put('/profile', { about })
+      .put('/profile', { about, name, location })
       .then((response) => response.data);
 
     yield put(profileUpdateSuccess(data));

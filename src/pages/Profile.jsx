@@ -16,7 +16,10 @@ export const Profile = () => {
   const { token } = useSelector((state) => state.auth);
 
   const [about, setAbout] = useState('');
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
   const [redirect, setRedirect] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +35,8 @@ export const Profile = () => {
   useEffect(() => {
     if (user != null) {
       setAbout(user.about);
+      setName(user.name);
+      setLocation(user.location);
     }
   }, [user]);
 
@@ -41,7 +46,7 @@ export const Profile = () => {
 
   const handleProfileUpdate = (event) => {
     event.preventDefault();
-    dispatch(profileUpdateRequest({ about }));
+    dispatch(profileUpdateRequest({ about, name, location }));
   };
 
   return (
@@ -61,6 +66,7 @@ export const Profile = () => {
                 <Image src={user.avatar} roundedCircle width={200} />
               </Col>
             </Row>
+
             <Form className="mx-auto p-4" style={{ width: 600 }}>
               <Form.Group as={Row} controlId="formPlaintextEmail">
                 <Form.Label column sm="2">
@@ -68,6 +74,18 @@ export const Profile = () => {
                 </Form.Label>
                 <Col sm="10">
                   <Form.Control plaintext readOnly value={user.login} />
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="formPlaintextEmail">
+                <Form.Label column sm="2">
+                  Name
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                  />
                 </Col>
               </Form.Group>
 
@@ -81,6 +99,18 @@ export const Profile = () => {
                     rows="4"
                     value={about}
                     onChange={(event) => setAbout(event.target.value)}
+                  />
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="formPlaintextEmail">
+                <Form.Label column sm="2">
+                  Location
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    value={location}
+                    onChange={(event) => setLocation(event.target.value)}
                   />
                 </Col>
               </Form.Group>
