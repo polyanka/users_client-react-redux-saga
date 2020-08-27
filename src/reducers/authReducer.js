@@ -1,6 +1,4 @@
 import {
-  AUTH_SUCCESS,
-  AUTH_ERROR,
   AUTH_SIGN_IN_REQUEST,
   AUTH_SIGN_IN_SUCCESS,
   AUTH_SIGN_UP_SUCCESS,
@@ -29,7 +27,7 @@ export default (state = INITIAL_STATE, action) => {
     }
 
     case AUTH_SIGN_OUT_SUCCESS: {
-      return { ...INITIAL_STATE };
+      return { ...INITIAL_STATE, isAuth: false };
     }
 
     case AUTH_SIGN_UP_SUCCESS: {

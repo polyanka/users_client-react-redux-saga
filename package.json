@@ -1,13 +1,13 @@
 {
-  "name": "users_react-redux-saga-reselect",
+  "name": "users_client-react-redux-saga",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Client-side application that implements JWT based authentication",
+  "main": "index.jsx",
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack --mode production"
   },
-  "author": "",
+  "author": "polyanka",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",

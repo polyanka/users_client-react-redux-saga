@@ -20,7 +20,11 @@ function* signInSaga({ payload: { login, password } }) {
       .post('/signIn', { login, password })
       .then((response) => response.data);
 
-    yield localStorage.setItem('jwtToken', JSON.stringify(data.token));
+    yield call(
+      [localStorage, 'setItem'],
+      'jwtToken',
+      JSON.stringify(data.token)
+    );
     yield put(signInSuccess(data));
   } catch (error) {
     yield put(setError(error.message));

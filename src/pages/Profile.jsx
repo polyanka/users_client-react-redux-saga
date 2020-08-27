@@ -24,11 +24,13 @@ export const Profile = () => {
   useEffect(() => {
     dispatch(profileRequest());
   }, [dispatch]);
+
   useEffect(() => {
     if (success === false) {
       setRedirect(true);
     }
   }, [dispatch, success]);
+
   useEffect(() => {
     if (user != null) {
       setAbout(user.about);

@@ -1,6 +1,10 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import { PROFILE_REQUEST, PROFILE_UPDATE_REQUEST } from '../types';
-import { profileSuccess, profileUpdateSuccess, setError } from '../actions';
+import {
+  profileSuccess,
+  profileUpdateSuccess,
+  signOutRequest,
+} from '../actions';
 import axios from '../api';
 
 function* profileSaga() {
@@ -9,7 +13,7 @@ function* profileSaga() {
 
     yield put(profileSuccess(data));
   } catch (error) {
-    yield put(setError(error.message));
+    yield put(signOutRequest());
   }
 }
 
@@ -21,7 +25,7 @@ function* profileUpdateSaga({ payload: { about, name, location } }) {
 
     yield put(profileUpdateSuccess(data));
   } catch (error) {
-    yield put(setError(error.message));
+    yield put(signOutRequest());
   }
 }
 
